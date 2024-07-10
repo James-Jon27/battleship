@@ -1,7 +1,7 @@
 export default class Board {
     constructor() {
         this.numRows = 9;
-        this.numCols = 9;
+        this.numCols = 9; 
         this.ships = [5, 4, 3, 3, 2];
         this.grid = this.populateGrid();
         this.numRemaining = 17;

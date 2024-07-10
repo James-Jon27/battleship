@@ -1,1 +1,17 @@
 /* Your code here */
+h1 {
+	display: flex;
+	justify-content: center;
+}
+#gameboard {
+	display: grid;
+	grid-template-columns: repeat(9, 55px);
+	grid-template-rows: repeat(9, 55px);
+	justify-content: center;
+}
+
+.cell {
+	border: 1px solid black;
+	height: 50px;
+	width: 50px;
+}
