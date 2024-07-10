@@ -8,16 +8,32 @@ console.log(board.grid);
 
 const makeHit = (e) => {
 	e.preventDefault();
-	const cell = document.getElementsByClassName("cell");
-	console.log(cell);
+	const button = document.querySelectorAll(".cell");
 
-	row = cell.dataset.row;
-	col = cell.dataset.col;
-	if (!board.makeHit(row, col)) {
-		cell.target.backgroundColor = "red";
+	const row = e.target.dataset.row;
+	const col = e.target.dataset.col;
+	const res = board.makeHit(row, col);
+	if (!res) {
+		e.target.classList.add("miss");
+		e.target.style.backgroundColor = "red";
 	} else {
-		cell.target.innerText = board.makeHit(row, col);
-		cell.target.backgroundColor = "green";
+		e.target.innerText = res;
+		e.target.classList.add("hit");
+		e.target.style.backgroundColor = "green";
+        e.target.removeEventListener('click', makeHit);
+	}
+
+	console.log(board.numRemaining);
+
+	if (board.isGameOver()) {
+		button.forEach((square) => {
+			square.removeEventListener("click", makeHit);
+		});
+
+        const h1 = document.querySelector('h1');
+        const youWin = document.createElement('h4');
+        youWin.textContent = 'YOU WIN!';
+        h1.insertAdjacentElement('afterend', youWin);
 	}
 };
 
@@ -26,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	for (let i = 0; i < 9; i++) {
 		for (let j = 0; j < 9; j++) {
-			const square = document.createElement("button");
+			const square = document.createElement("div");
 			square.classList.add("cell");
 			square.dataset.row = i;
 			square.dataset.col = j;
@@ -34,7 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 
+	const click = document.querySelectorAll(".cell");
+	click.forEach((square) => {
+		square.addEventListener("click", makeHit);
+	});
 });
-
-const button = document.getElementsByClassName("cell");
-button.addEventListener("click", makeHit);
